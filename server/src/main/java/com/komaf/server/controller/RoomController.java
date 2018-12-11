@@ -1,20 +1,18 @@
 package com.komaf.server.controller;
 
 
-import com.komaf.server.domain.Player;
-import com.komaf.server.domain.Room;
-import com.komaf.server.domain.RoomStatus;
+import com.komaf.server.domain.player.Player;
+import com.komaf.server.domain.room.Room;
+import com.komaf.server.domain.room.RoomStatus;
 import com.komaf.server.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/rooms")
 public class RoomController {
 
     private final RoomRepository roomRepository;
@@ -24,16 +22,29 @@ public class RoomController {
         this.roomRepository = roomRepository;
     }
 
-    @GetMapping("/rooms")
-    List<Room> all() {
-        Player player1 = new Player("adam");
-        Player player2 = new Player("jan");
-        roomRepository.save(new Room(player1, player2, RoomStatus.FREE));
+    @GetMapping("/getAll")
+    List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
+    @GetMapping("/getAllFree")
+    List<Room> getFreeRooms() {
+        return roomRepository.getFreeRooms();
+    }
 
-    @PostMapping("/rooms")
-    ResponseEntity<Room> newEmployee(@RequestBody Room newRoom) {
+
+    //To jest do wywalenia
+    @GetMapping("/test")
+    void fillTestData(){
+        roomRepository.save(new Room(new Player("jan")));
+        roomRepository.save(new Room(new Player("janusz")));
+        roomRepository.save(new Room(new Player("magda")));
+        roomRepository.save(new Room(new Player("pioter")));
+        roomRepository.save(new Room(new Player("pioter"), new Player("Andrzej")));
+    }
+
+    @PostMapping("/")
+    ResponseEntity<Room> addRoom(@RequestBody Room newRoom) {
         return roomRepository.save(newRoom);
     }
+
 }

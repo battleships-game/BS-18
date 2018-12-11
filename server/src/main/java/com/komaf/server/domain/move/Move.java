@@ -1,4 +1,5 @@
-package com.komaf.server.domain;
+package com.komaf.server.domain.move;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Room{
-    Player player1;
-    Player player2;
-    RoomStatus roomStatus;
+public class Move {
+
+    int number;
+    int boardId;
+    int playerId;
 }

@@ -1,4 +1,4 @@
-package com.komaf.server.domain;
+package com.komaf.server.domain.room;
 
 public enum RoomStatus {
     OCCUPIED, FREE
